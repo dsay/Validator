@@ -53,16 +53,16 @@ open class Validator<InputType, ValidationError: Error> {
     }
 }
 
-extension Validator where InputType == String {
+public extension Validator where InputType == String {
 
-    public func required(_ error: ValidationError) -> Validator {
+    func required(_ error: ValidationError) -> Validator {
         self.rules.append { value, nilResponse in
             (value != nil).map(error)
         }
         return self
     }
     
-    public func min(_ length: Int, _ error: ValidationError) -> Validator {
+    func min(_ length: Int, _ error: ValidationError) -> Validator {
         self.rules.append { value, nilResponse in
             guard let value = value else {
                 return nilResponse.map(error)
@@ -72,7 +72,7 @@ extension Validator where InputType == String {
         return self
     }
     
-    public func max(_ length: Int, _ error: ValidationError) -> Validator {
+    func max(_ length: Int, _ error: ValidationError) -> Validator {
         self.rules.append { value, nilResponse in
             guard let value = value else {
                 return nilResponse.map(error)
@@ -82,7 +82,7 @@ extension Validator where InputType == String {
         return self
     }
     
-    public func isEqual(_ string: String?, _ error: ValidationError) -> Validator {
+    func isEqual(_ string: String?, _ error: ValidationError) -> Validator {
         self.rules.append { value, nilResponse in
             guard let value = value else {
                 return nilResponse.map(error)
@@ -92,14 +92,14 @@ extension Validator where InputType == String {
         return self
     }
     
-    public func email(_ error: ValidationError) -> Validator {
+    func email(_ error: ValidationError) -> Validator {
         self.rules.append { value, nilResponse in
             self.regex(value: value, Regex.EmailRegex, error, nilResponse)
         }
         return self
     }
     
-    public func password(_ error: ValidationError) -> Validator {
+    func password(_ error: ValidationError) -> Validator {
         self.rules.append { value, nilResponse in
             self.regex(value: value, Regex.Password, error, nilResponse)
         }
