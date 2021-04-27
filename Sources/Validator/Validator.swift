@@ -29,6 +29,10 @@ open class Validator<InputType, ValidationError: Error> {
 
     private var rules: [ValidationRule] = []
 
+    public init() {
+        
+    }
+    
     public func optional(_ value: InputType?) -> Result<InputType?, ValidationError> {
         if case .failure(let error) = rules.map({ $0(value, true) }).first(where: { $0.isFailure }) {
             return .failure(error)
