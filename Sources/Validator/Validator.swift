@@ -117,12 +117,30 @@ public extension Validator where InputType == String {
 
 public extension Result {
     
+    var isSuccess: Bool {
+        switch self {
+        case .success:
+            return true
+        default:
+            return false
+        }
+    }
+
     var isFailure: Bool {
         switch self {
         case .success:
             return false
         default:
             return true
+        }
+    }
+    
+    var error: Failure? {
+        switch self {
+        case .failure(let error):
+            return error
+        default:
+            return nil
         }
     }
 }
